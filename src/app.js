@@ -1,11 +1,20 @@
-const express = require('express');
+const express = require("express");
 
 const app = express();
 
-// TODO: importar y montar middleware de logging
-// TODO: montar express.json()
-// TODO: importar y montar el router de artículos
-// TODO: añadir ruta GET /health
-// TODO: importar y montar el manejador de errores
+const logger = require("./middlewares/logger");
+app.use(logger);
+
+app.use(express.json());
+
+const articlesRouter = require("./routes/articles");
+app.use("/", articlesRouter);
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
+const errorHandler = require("./middlewares/errorHandler");
+app.use(errorHandler);
 
 module.exports = app;
