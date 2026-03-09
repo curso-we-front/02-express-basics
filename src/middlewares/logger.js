@@ -10,12 +10,15 @@
  */
 
 function logger(req, res, next) {
-  // TODO: implementar
- const start = Date.now();
+  const start = Date.now();
 
   res.on("finish", () => {
     const responseTime = Date.now() - start;
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${res.statusCode} ${responseTime}ms`);
+    const formatted = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+    console.log(
+      `[${formatted}] ${req.method} ${req.url} ${res.statusCode} ${responseTime}ms`,
+    );
   });
 
   next();
