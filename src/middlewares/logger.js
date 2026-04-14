@@ -10,7 +10,14 @@
  */
 
 function logger(req, res, next) {
-  // TODO: implementar
+  const startTime = Date.now();
+  res.on("finish", () => {
+    const responseDuration = Date.now() - startTime + "ms";
+    const formattedDate = `[${new Date().toISOString().split(".")[0].replace("T", " ")}]`;
+    console.log(
+      `${formattedDate} ${req.method} ${req.url} ${res.statusCode} ${responseDuration}`,
+    );
+  });
   next();
 }
 
