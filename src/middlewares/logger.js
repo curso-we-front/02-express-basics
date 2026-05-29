@@ -11,7 +11,15 @@
 
 function logger(req, res, next) {
   // TODO: implementar
-  next();
+  const time = Date.now()
+  res.on("finish", () => {
+    const timeResponse = `${new Date(Date.now()) - time}ms`
+    const formattedCurrentDate = `${new Date(Date.now()).toLocaleString().replace(",", "")}`
+    console.log(
+      `${formattedCurrentDate} ${req.method} ${req.url} ${res.statusCode} ${timeResponse}`,
+    )
+  })
+  next()
 }
 
-module.exports = logger;
+module.exports = logger

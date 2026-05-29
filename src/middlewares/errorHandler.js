@@ -11,6 +11,11 @@
 
 function errorHandler(err, req, res, next) {
   // TODO: implementar
+  const status = err.status || 500
+  if (process.env.NODE_ENV !== "production") {
+    console.log(err.stack)
+  }
+  res.status(status).json({ error: err.message })
 }
 
-module.exports = errorHandler;
+module.exports = errorHandler
