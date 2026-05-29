@@ -24,18 +24,18 @@ router.get("/articles", (req, res, next) => {
 router.get("/articles/:id", (req, res, next) => {
   const articles = getArticles()
   const id = Number(req.params.id)
-  const idArticlesPublished = articles.find(
+  const articlePublished = articles.find(
     (article) => article.published && article.id === id,
   )
 
-  if (!idArticlesPublished) {
+  if (!articlePublished) {
     const error = new Error(
       "Artículo no publicado, por favor, inténtelo de nuevo",
     )
     error.status = 404
     return next(error)
   }
-  res.status(200).json(idArticlesPublished)
+  res.status(200).json(articlePublished)
   // implementar
   // Usa next(error) para pasar errores al manejador central
 })
