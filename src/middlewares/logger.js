@@ -11,6 +11,13 @@
 
 function logger(req, res, next) {
   // TODO: implementar
+  const startTime = Date.now()
+  res.on("finish", ()=>{
+    const responseTime = Date.now() - startTime
+    const date = new Date().toISOString().split(".")[0].replace("T", " ")
+    console.log(`[${date}] ${req.method} ${res.statusCode} ${responseTime}ms`);
+  })
+  
   next();
 }
 
